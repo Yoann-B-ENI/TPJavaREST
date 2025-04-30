@@ -3,7 +3,6 @@ package fr.eni.vioyo.RestLudotheque.dal;
 import fr.eni.vioyo.RestLudotheque.bo.Client;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +30,8 @@ public class ClientRepositoryTest {
         assertThat(cli).isNotNull();
         assertThat(clientSaved).isNotNull();
 
-        assertThat(cli.getId()).isNull();
-        assertThat(clientSaved.getId()).isNotNull();
+        assertThat(cli.getId()).isEqualTo(0);
+        assertThat(clientSaved.getId()).isNotEqualTo(0);
 
         assertThat(cli.getName()).isEqualTo("nametest");
         assertThat(cli.getFirstName()).isEqualTo("firstnametest");
@@ -78,13 +77,12 @@ public class ClientRepositoryTest {
                 "emailtest",
                 "phonenumbertest"
         );
-
         Client clientSaved = repo.save(cli);
 
         Client clientDB = repo.findById(clientSaved.getId()).orElse(null);
 
         assertThat(clientDB).isNotNull();
-        assertThat(clientDB.getId()).isNotNull();
+        assertThat(clientDB.getId()).isNotEqualTo(0);
         assertThat(clientDB.getId()).isEqualTo(clientSaved.getId());
 
         assertThat(clientDB.getName()).isEqualTo(clientSaved.getName());
@@ -102,13 +100,11 @@ public class ClientRepositoryTest {
                 "emailtest",
                 "phonenumbertest"
         );
-
         Client clientSaved = repo.save(cli);
 
         repo.delete(clientSaved);
 
         Client clientDB = repo.findById(clientSaved.getId()).orElse(null);
-
         assertThat(clientDB).isNull();
     }
 
