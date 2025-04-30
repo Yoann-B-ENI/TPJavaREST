@@ -17,7 +17,7 @@ public class GameCopy {
     @Column
     private boolean rentable;
 
-    @ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id",name = "game_id" )
     private Game game;
 

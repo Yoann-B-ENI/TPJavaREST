@@ -37,9 +37,9 @@ public class Game {
 
     @NonNull
     @Column(nullable = false)
-    private Float dailyPrice ;
+    private Float dailyPrice;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "game")
     private List<GameCopy> copies;
 
     @ManyToMany(targetEntity = Genre.class)
