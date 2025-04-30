@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost;databaseName=LUDO_DB;encrypt=false
+    username: sa
+    password: Pa$$w0rd
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  application:
+    name: RestLudotheque
