@@ -15,7 +15,7 @@ public class ClientTest {
         cl = new Client();
 
         assertThat(cl).isNotNull();
-        assertThat(cl.getId()).isNull();
+        assertThat(cl.getId()).isEqualTo(0);
         assertThat(cl.getName()).isNull();
         assertThat(cl.getFirstName()).isNull();
         assertThat(cl.getEmail()).isNull();
@@ -32,7 +32,7 @@ public class ClientTest {
         cl = new Client("nametest", "firstnametest", "emailtest", "phonenumbertest");
 
         assertThat(cl).isNotNull();
-        assertThat(cl.getId()).isNull();
+        assertThat(cl.getId()).isEqualTo(0);
         assertThat(cl.getName()).isEqualTo("nametest");
         assertThat(cl.getFirstName()).isEqualTo("firstnametest");
         assertThat(cl.getEmail()).isEqualTo("emailtest");
