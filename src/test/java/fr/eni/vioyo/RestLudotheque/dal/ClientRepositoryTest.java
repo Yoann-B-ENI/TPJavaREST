@@ -3,6 +3,7 @@ package fr.eni.vioyo.RestLudotheque.dal;
 import fr.eni.vioyo.RestLudotheque.bo.Client;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Null;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -13,7 +14,7 @@ public class ClientRepositoryTest {
     ClientRepository repo;
 
     @Test
-    @DisplayName("Test repo save client 1 - valid case")
+    @DisplayName("Test repo save client 1 - insert - valid case")
     public void testRepo1Valid(){
         Client cli = new Client("nametest",
                 "firstnametest",
@@ -43,4 +44,66 @@ public class ClientRepositoryTest {
         assertThat(clientSaved.getAddress()).isNull();
         assertThat(clientSaved.getRentals()).isNull();
     }
+
+    @Test
+    @DisplayName("Test repo save client 2 - update - valid case")
+    public void testRepo2Valid(){
+        Client cli = new Client("nametest",
+                "firstnametest",
+                "emailtest",
+                "phonenumbertest"
+        );
+
+        Client clientSaved = repo.save(cli);
+
+        clientSaved.setName("NEW_NAME");
+
+        clientSaved = repo.save(clientSaved);
+
+        assertThat(cli.getName()).isEqualTo("nametest");
+        assertThat(clientSaved.getName()).isEqualTo("NEW_NAME");
+    }
+
+    @Test
+    @DisplayName("Test repo client 3 - read - valid case")
+    public void testRepo3Valid(){
+        Client cli = new Client("nametest",
+                "firstnametest",
+                "emailtest",
+                "phonenumbertest"
+        );
+
+        Client clientSaved = repo.save(cli);
+
+        Client clientDB = repo.findById(clientSaved.getId()).orElse(null);
+
+        assertThat(clientDB).isNotNull();
+        assertThat(clientDB.getId()).isNotNull();
+        assertThat(clientDB.getId()).isEqualTo(clientSaved.getId());
+
+        assertThat(clientDB.getName()).isEqualTo(clientSaved.getName());
+        assertThat(clientDB.getFirstName()).isEqualTo(clientSaved.getFirstName());
+        assertThat(clientDB.getEmail()).isEqualTo(clientSaved.getEmail());
+        assertThat(clientDB.getPhoneNumber()).isEqualTo(clientSaved.getPhoneNumber());
+    }
+
+    @Test
+    @DisplayName("Test repo client 4 - delete - valid case")
+    public void testRepo5Valid(){
+        Client cli = new Client("name_delete",
+                "firstnametest",
+                "emailtest",
+                "phonenumbertest"
+        );
+
+        Client clientSaved = repo.save(cli);
+
+        repo.delete(clientSaved);
+
+        Client clientDB = repo.findById(clientSaved.getId()).orElse(null);
+
+        assertThat(clientDB).isNull();
+    }
+
+
 }
