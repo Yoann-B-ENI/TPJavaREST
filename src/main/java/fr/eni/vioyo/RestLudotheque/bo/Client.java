@@ -3,6 +3,8 @@ package fr.eni.vioyo.RestLudotheque.bo;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 //@Log
 @Data
 @NoArgsConstructor
@@ -32,6 +34,10 @@ public class Client {
     private String phoneNumber;
 
     @OneToOne(optional = false, cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JoinColumn(name="address_id", unique=true, nullable=false, updatable=false)
+    @JoinColumn(name = "address_id", unique = true, nullable = false, updatable = false)
     private Address address;
+
+    @OneToMany()
+    @JoinColumn(name = "cli_rental_id")
+    private List<Rental> rentals;
 }
