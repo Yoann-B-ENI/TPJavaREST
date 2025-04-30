@@ -33,7 +33,7 @@ public class Client {
     @Column(nullable = true, unique = true)
     private String phoneNumber;
 
-    @OneToOne(optional = false, cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToOne(optional = false, cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "address_id", unique = true, nullable = false, updatable = false)
     private Address address;
 
