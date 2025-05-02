@@ -9,7 +9,7 @@ import fr.eni.vioyo.RestLudotheque.exceptions.NullBOException;
 import java.util.List;
 
 public interface ClientService {
-    Client addClient(Client cl, Address addr);
+    Client addClient(Client cl, Address addr) throws NullBOException, BONotInDBException;
 
     List<Client> findClientsByNameStart(String nameStart);
 

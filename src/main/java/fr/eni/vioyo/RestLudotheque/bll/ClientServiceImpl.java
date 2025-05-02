@@ -21,14 +21,21 @@ public class ClientServiceImpl implements ClientService{
     private ClientRepository repo;
 
     @Override
-    public Client addClient(Client cl, Address adr){
+    public Client addClient(Client cl, Address adr) throws NullBOException, BONotInDBException {
         cl.setAddress(adr);
 
         try {
             cl = this.repo.save(cl);
-        } catch (Exception e) { //TODO replace with an actual catch
-            log.severe("Couldn't save client " + cl + " in DB");
-            throw new RuntimeException("Couldn't save client " + cl + " in DB");
+        } catch (IllegalArgumentException e) {
+            NullBOException excp = new NullBOException(Client.class);
+            log.severe(excp.getMessage());
+            throw excp;
+        } catch (OptimisticLockingFailureException e) {
+            BONotInDBException excp = new BONotInDBException(cl);
+            log.severe(excp.getMessage());
+            throw excp;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         return cl;
