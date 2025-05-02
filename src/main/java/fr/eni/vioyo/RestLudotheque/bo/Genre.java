@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Genre {
+public class Genre extends EntityBaseClass{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
