@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-public class Client {
+public class Client extends EntityBaseClass{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Client {
     @Column(nullable = true, unique = true)
     private String phoneNumber;
 
-    @OneToOne(optional = false, cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToOne(optional = false, cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "address_id", unique = true, nullable = false, updatable = false)
     private Address address;
 

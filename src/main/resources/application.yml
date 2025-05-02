@@ -8,5 +8,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+    properties:
+      hibernate:
+        format-sql: true
   application:
     name: RestLudotheque
