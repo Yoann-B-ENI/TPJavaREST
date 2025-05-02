@@ -15,11 +15,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -27,16 +23,11 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
-
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
-      with:
-         gradle-version: '8.9'
-    
-    - name: Build with Gradle 8.9
+      uses: gradle/actions/setup-gradle@v4
+    - name: Clear Gradle cache
+      run: gradle clean build --no-daemon --refresh-dependencies
+    - name: Build with Gradle
       run: gradle build
