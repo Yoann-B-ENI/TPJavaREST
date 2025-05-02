@@ -1,5 +1,6 @@
 package fr.eni.vioyo.RestLudotheque.dal;
 
+import fr.eni.vioyo.RestLudotheque.bo.Address;
 import fr.eni.vioyo.RestLudotheque.bo.Client;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,27 +25,29 @@ public class ClientRepositoryTest {
                 "emailtest",
                 "phonenumbertest"
         );
+        Address adr = new Address("Rue du test", "44123", "Nantes");
+        cli.setAddress(adr);
 
         Client clientSaved = repo.save(cli);
 
         assertThat(cli).isNotNull();
         assertThat(clientSaved).isNotNull();
 
-        assertThat(cli.getId()).isEqualTo(0);
+        assertThat(cli.getId()).isNotEqualTo(0); // !! cli is modified IN PLACE !!
         assertThat(clientSaved.getId()).isNotEqualTo(0);
 
         assertThat(cli.getName()).isEqualTo("nametest");
         assertThat(cli.getFirstName()).isEqualTo("firstnametest");
         assertThat(cli.getEmail()).isEqualTo("emailtest");
         assertThat(cli.getPhoneNumber()).isEqualTo("phonenumbertest");
-        assertThat(cli.getAddress()).isNull();
+        assertThat(cli.getAddress()).isNotNull();
         assertThat(cli.getRentals()).isNull();
 
         assertThat(clientSaved.getName()).isEqualTo("nametest");
         assertThat(clientSaved.getFirstName()).isEqualTo("firstnametest");
         assertThat(clientSaved.getEmail()).isEqualTo("emailtest");
         assertThat(clientSaved.getPhoneNumber()).isEqualTo("phonenumbertest");
-        assertThat(clientSaved.getAddress()).isNull();
+        assertThat(clientSaved.getAddress()).isNotNull();
         assertThat(clientSaved.getRentals()).isNull();
     }
 
@@ -57,14 +60,14 @@ public class ClientRepositoryTest {
                 "emailtest",
                 "phonenumbertest"
         );
-
+        Address adr = new Address("Rue du test", "44123", "Nantes");
+        cli.setAddress(adr);
         Client clientSaved = repo.save(cli);
 
         clientSaved.setName("NEW_NAME");
-
         clientSaved = repo.save(clientSaved);
 
-        assertThat(cli.getName()).isEqualTo("nametest");
+        assertThat(cli.getName()).isEqualTo("NEW_NAME"); // !! cli got MODIFIED !!
         assertThat(clientSaved.getName()).isEqualTo("NEW_NAME");
     }
 
@@ -77,6 +80,9 @@ public class ClientRepositoryTest {
                 "emailtest",
                 "phonenumbertest"
         );
+        Address adr = new Address("Rue du test", "44123", "Nantes");
+        cli.setAddress(adr);
+
         Client clientSaved = repo.save(cli);
 
         Client clientDB = repo.findById(clientSaved.getId()).orElse(null);
@@ -100,6 +106,9 @@ public class ClientRepositoryTest {
                 "emailtest",
                 "phonenumbertest"
         );
+        Address adr = new Address("Rue du test", "44123", "Nantes");
+        cli.setAddress(adr);
+
         Client clientSaved = repo.save(cli);
 
         repo.delete(clientSaved);
