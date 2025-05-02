@@ -27,5 +27,7 @@ jobs:
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
+    - name: Clear Gradle cache
+      run: gradle clean build --no-daemon --refresh-dependencies
     - name: Build with Gradle
       run: gradle build
