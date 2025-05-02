@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-public class Game {
+public class Game extends EntityBaseClass{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class GameCopy {
+public class GameCopy extends EntityBaseClass{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

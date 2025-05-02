@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-public class Client {
+public class Client extends EntityBaseClass{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
