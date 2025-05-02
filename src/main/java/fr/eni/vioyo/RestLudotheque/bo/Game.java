@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Game {
 
     @Id

@@ -2,9 +2,12 @@ package fr.eni.vioyo.RestLudotheque.bo;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@Entity
 @Data
+@RequiredArgsConstructor
+@Entity
 public class GameCopy {
 
     @Id
@@ -17,8 +20,9 @@ public class GameCopy {
     @Column
     private boolean rentable;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id",name = "game_id" )
+
+    @ManyToOne(fetch=FetchType.LAZY, optional = false)
+    @JoinColumn(referencedColumnName = "id",name = "game_id")
     private Game game;
 
 }
