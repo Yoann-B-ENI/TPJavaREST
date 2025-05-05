@@ -14,4 +14,8 @@ public interface ClientService {
     List<Client> findClientsByNameStart(String nameStart);
 
     Client updateClient(Client cl) throws NoIDException, NullBOException, BONotInDBException;
+
+    void deleteClient(int id);
+
+    Client findById(int id) throws BONotInDBException;
 }

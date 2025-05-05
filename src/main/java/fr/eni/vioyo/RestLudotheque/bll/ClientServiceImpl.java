@@ -12,6 +12,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Log
@@ -61,6 +62,8 @@ public class ClientServiceImpl implements ClientService{
 
         try{
             // # # # #
+            Client clDB = this.repo.findById(cl.getId()).orElse(null);
+            cl.getAddress().setId(clDB.getAddress().getId());
             cl = this.repo.save(cl);
             // # # # #
         } catch (IllegalArgumentException e) {
@@ -77,6 +80,25 @@ public class ClientServiceImpl implements ClientService{
 
         return cl;
     }
+
+    @Override
+    public void deleteClient(int id){
+        this.repo.deleteById(id);
+    }
+
+    @Override
+    public Client findById(int id) throws BONotInDBException {
+        Optional<Client> temp = this.repo.findById(id);
+        if (temp.isEmpty()){
+            BONotInDBException excp = new BONotInDBException(new Client());
+            log.severe(excp.getMessage());
+            throw excp;
+        }
+        else{
+            return temp.get();
+        }
+    }
+
 
 
 }
